@@ -4,7 +4,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,9 +52,12 @@ import com.google.android.gms.location.LocationServices
 
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.CardColors
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableDoubleStateOf
-
+import androidx.compose.ui.graphics.RectangleShape
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -200,15 +202,33 @@ fun SelectAuthScreen(navController: NavHostController){
                 }
             }
 
-            if(latitude != 0.0)
-                Text(
-                    "Latitude: $latitude"
+            Card(
+                modifier = Modifier.padding(20.dp),
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = Color(0xFFE36A6A)
+                ),
+                shape = RoundedCornerShape( 10.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFFFE5E5),
+                    contentColor = Color(0xFFE36A6A),
                 )
-
-            if(longitude != 0.0)
-                Text(
-                    "Longitude: $longitude"
-                )
+            ){
+                Column (
+                    modifier = Modifier.padding(10.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ){
+                    if(latitude != 0.0)
+                        Text(
+                            "Latitude: $latitude"
+                        )
+                    if(longitude != 0.0)
+                        Text(
+                            "Longitude: $longitude"
+                        )
+                }
+            }
         }
     }
 }

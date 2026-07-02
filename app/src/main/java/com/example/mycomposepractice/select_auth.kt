@@ -151,7 +151,7 @@ fun SelectAuthScreen(navController: NavHostController){
     )
 
     var selectedIndex by remember {
-        mutableStateOf(0)
+        mutableStateOf<Int?>(null)
     }
 
     Scaffold (

@@ -1,5 +1,8 @@
 import android.Manifest
 import android.R
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -18,6 +21,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,9 +61,13 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.CardColors
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,6 +79,8 @@ fun SelectAuthScreen(navController: NavHostController){
     var longitude by remember {
         mutableDoubleStateOf(0.0)
     }
+    var showPermissionDialog by remember { mutableStateOf(false) }
+    var showGpsDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     val fusedLocationClient = remember {
@@ -97,6 +109,7 @@ fun SelectAuthScreen(navController: NavHostController){
                         Log.d("Location", "Longitude: $longitude")
                     } else {
                         Log.d("Location", "Location is NULL")
+                        showGpsDialog = true
                     }
                 }
                 .addOnFailureListener { e ->
@@ -113,6 +126,7 @@ fun SelectAuthScreen(navController: NavHostController){
                 getCurrentLocation()
             } else {
                 Log.d("Location Permission Denied","")
+                showPermissionDialog = true
             }
         }
 
@@ -134,8 +148,25 @@ fun SelectAuthScreen(navController: NavHostController){
         }
     }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    getCurrentLocation()
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
     val itemsList = listOf(
-        MenuItem("Sale", Icons.Outlined.Email, Color(0xFFEAC75F)),
+        MenuItem("Games", Icons.Outlined.Email, Color(0xFFEAC75F)),
         MenuItem("Pre-Auth", Icons.Outlined.Build, Color(0xFF67AB6A)),
         MenuItem("Auth Complete", Icons.Outlined.AccountCircle, Color(0xFFEC4D80)),
         MenuItem("Increase Auth", Icons.Outlined.Call, Color(0xFFD0891C)),
@@ -152,6 +183,51 @@ fun SelectAuthScreen(navController: NavHostController){
 
     var selectedIndex by remember {
         mutableStateOf<Int?>(null)
+    }
+
+    if (showPermissionDialog) {
+        AlertDialog(
+            onDismissRequest = { showPermissionDialog = false },
+            title = { Text("Location Permission Required") },
+            text = { Text("This app needs location access to continue. Please enable it in the app settings.") },
+            confirmButton = {
+                Button(onClick = {
+                    showPermissionDialog = false
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", context.packageName, null)
+                    }
+                    context.startActivity(intent)
+                }) {
+                    Text("Open Settings")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPermissionDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+    if (showGpsDialog) {
+        AlertDialog(
+            onDismissRequest = { showGpsDialog = false },
+            title = { Text("Location Services Disabled") },
+            text = { Text("GPS / Location is turned off on your device. Please enable it in device settings.") },
+            confirmButton = {
+                Button(onClick = {
+                    showGpsDialog = false
+                    context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }) {
+                    Text("Enable Location")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showGpsDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 
     Scaffold (
@@ -196,6 +272,9 @@ fun SelectAuthScreen(navController: NavHostController){
                             selectedIndex = index
                             if(index == 1){
                                 navController.navigate("preAuth")
+                            }
+                            if(index == 0){
+                                navController.navigate("gamescreen")
                             }
                         }
                     )

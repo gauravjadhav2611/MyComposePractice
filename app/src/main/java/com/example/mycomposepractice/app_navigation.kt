@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.*
 import com.example.mycomposepractice.PreAuthScreen
+import com.example.mycomposepractice.gameui.GameScreen
 import com.example.mycomposepractice.screens.HomeScreen
 import com.example.mycomposepractice.ui.PreAuthFlowScreen
 import com.google.android.gms.location.LocationServices
@@ -25,6 +26,10 @@ fun AppNavigation(){
     ) {
         composable("home") {
             SelectAuthScreen(navController)
+        }
+
+        composable("gamescreen") {
+            GameScreen()
         }
 
         composable("login") {

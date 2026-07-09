@@ -36,9 +36,11 @@ import com.example.mycomposepractice.ui.PreAuthFlowScreen
 @Composable
 fun PreAuthScreen(navController: NavHostController) {
 
-    var amount by remember {
-        mutableStateOf("")
-    }
+    var amount by remember { mutableStateOf("") }
+
+    var firstNumber by remember { mutableStateOf<Long?>(null) }
+
+    var currentOperator by remember { mutableStateOf<String?>(null) }
 
     val keys = listOf(
         "C",
@@ -181,13 +183,56 @@ fun PreAuthScreen(navController: NavHostController) {
 
                                 }
 
-                                "=" -> {
-
-                                }
-
                                 "+", "-", "×" -> {
 
+                                    if (amount.isEmpty()) return@CalculatorButton
+
+                                    val current = amount.toLong()
+
+                                    if (firstNumber == null) {
+
+                                        // First operator pressed
+                                        firstNumber = current
+
+                                    } else {
+
+                                        // Second operator pressed
+                                        firstNumber = calculate(
+                                            firstNumber!!,
+                                            current,
+                                            currentOperator!!
+                                        )
+
+                                    }
+
+                                    currentOperator = key
+
+                                    amount = ""
+
                                 }
+
+                                "=" -> {
+
+                                    if (
+                                        firstNumber != null &&
+                                        currentOperator != null &&
+                                        amount.isNotEmpty()
+                                    ) {
+
+                                        val result = calculate(
+                                            firstNumber!!,
+                                            amount.toLong(),
+                                            currentOperator!!
+                                        )
+
+                                        amount = result.toString()
+
+                                        firstNumber = null
+                                        currentOperator = null
+                                    }
+
+                                }
+
 
                                 else -> {
                                     amount += key
@@ -203,6 +248,30 @@ fun PreAuthScreen(navController: NavHostController) {
 
         }
 
+    }
+
+}
+
+fun calculate(
+    first: Long,
+    second: Long,
+    operator: String
+): Long {
+
+    return when (operator) {
+
+        "+" -> first + second
+
+        "-" -> first - second
+
+        "×" -> first * second
+
+        "÷" -> if (second != 0L)
+            first / second
+        else
+            0L
+
+        else -> second
     }
 
 }

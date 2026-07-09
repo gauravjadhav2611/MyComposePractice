@@ -2,6 +2,7 @@ package com.example.mycomposepractice.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +24,7 @@ fun AuthorizingScreen(
             .background(Color(0xFFEAF3F7))
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Alignment.CenterVertically as Arrangement.Vertical
+        verticalArrangement = Arrangement.Center
     ) {
 
         CircularProgressIndicator(
@@ -46,7 +47,6 @@ fun AuthorizingScreen(
             color = Color.Gray
         )
 
-        Spacer(modifier = Modifier.weight(1f))
 
     }
 

@@ -18,6 +18,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -64,12 +65,13 @@ fun PreAuthScreen(navController: NavHostController) {
     )
 
     Scaffold(
+        Modifier.background(color = MaterialTheme.colorScheme.background),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Card(
                         colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFF7E8D6)
+                            containerColor = MaterialTheme.colorScheme.surface
                         )
                     ) {
                         Text(
@@ -88,7 +90,7 @@ fun PreAuthScreen(navController: NavHostController) {
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             )
         },
@@ -122,7 +124,7 @@ fun PreAuthScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFEAF2F6))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(padding)
                 .padding(16.dp)
         ) {
@@ -142,7 +144,7 @@ fun PreAuthScreen(navController: NavHostController) {
                     text = "đ",
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Light,
-                    color = Color(0xFF626262)
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
@@ -284,11 +286,11 @@ fun CalculatorButton(
 
     val background = when (text) {
 
-        "C" -> Color(0xFFF9DADA)
+        "C" -> MaterialTheme.colorScheme.errorContainer
 
-        "=" -> Color(0xFFD8F2F5)
+        "=" -> MaterialTheme.colorScheme.tertiaryContainer
 
-        else -> Color.White
+        else -> MaterialTheme.colorScheme.surfaceVariant
     }
 
     Button(
@@ -307,7 +309,7 @@ fun CalculatorButton(
             Icon(
                 imageVector = Icons.Outlined.Clear,
                 contentDescription = null,
-                tint = Color.DarkGray
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
         } else {
@@ -315,10 +317,11 @@ fun CalculatorButton(
             Text(
                 text = text,
                 fontSize = if (text == "Million") 18.sp else 28.sp,
-                color = if (text == "C")
-                    Color.Red
-                else
-                    Color.Black
+                color = when (text) {
+                    "C" -> MaterialTheme.colorScheme.onErrorContainer
+                    "=" -> MaterialTheme.colorScheme.onTertiaryContainer
+                    else -> MaterialTheme.colorScheme.onSurfaceVariant
+                }
             )
 
         }

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -38,9 +39,9 @@ fun PaymentOptionCard(
 
     val textColor =
         if (enabled)
-            Color(0xFF202020)
+            MaterialTheme.colorScheme.onSurface
         else
-            Color.LightGray
+            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
 
     Card(
         modifier = Modifier
@@ -55,7 +56,7 @@ fun PaymentOptionCard(
             borderColor
         ),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
 
@@ -84,7 +85,7 @@ fun PaymentOptionCard(
                 Icon(
                     imageVector = Icons.Outlined.Lock,
                     contentDescription = null,
-                    tint = Color.LightGray
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                 )
 
             }

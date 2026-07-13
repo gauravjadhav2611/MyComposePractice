@@ -28,6 +28,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -239,7 +240,7 @@ fun SelectAuthScreen(navController: NavHostController){
                 actions = {
                     IconButton(
                         onClick = {
-                            // TODO: Settings click
+                            navController.navigate("settings")
                         }
                     ) {
                         Icon(
@@ -285,12 +286,12 @@ fun SelectAuthScreen(navController: NavHostController){
                 modifier = Modifier.padding(20.dp),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = Color(0xFFE36A6A)
+                    color = MaterialTheme.colorScheme.error
                 ),
                 shape = RoundedCornerShape( 10.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFFFE5E5),
-                    contentColor = Color(0xFFE36A6A),
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer,
                 )
             ){
                 Column (
@@ -326,11 +327,11 @@ fun AuthElement(
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         ),
         border = BorderStroke(
             width = if(selected) 3.dp else 1.dp,
-            color = if(selected) Color(0xFFF1C651) else Color(0xFFE2E2E2)
+            color = if(selected) Color(0xFFF1C651) else MaterialTheme.colorScheme.outlineVariant
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -357,7 +358,7 @@ fun AuthElement(
                 text = item.title,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color(0xFF222222)
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }

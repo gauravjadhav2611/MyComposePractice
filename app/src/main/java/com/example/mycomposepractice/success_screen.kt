@@ -1,6 +1,5 @@
 package com.example.mycomposepractice.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
@@ -22,60 +21,66 @@ fun SuccessScreen(
     onNo: () -> Unit
 ) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFEAF3F7))
-            .navigationBarsPadding()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
 
-        Icon(
-            imageVector = Icons.Default.CheckCircle,
-            contentDescription = null,
-            tint = Color(0xFF2E9E44),
-            modifier = Modifier.size(110.dp)
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            "Pre-Authorization Successful",
-            fontSize = 26.sp,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text("Amount Held  $amount")
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text("Auth Code  $authCode")
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text("Transaction#  $transactionId")
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(20.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .navigationBarsPadding()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            OutlinedButton(
-                onClick = onNo,
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("NO")
-            }
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = null,
+                tint = Color(0xFF2E9E44),
+                modifier = Modifier.size(110.dp)
+            )
 
-            Button(
-                onClick = onYes,
-                modifier = Modifier.weight(1f)
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                "Pre-Authorization Successful",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text("Amount Held  $amount")
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text("Auth Code  $authCode")
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text("Transaction#  $transactionId")
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                Text("YES")
+
+                OutlinedButton(
+                    onClick = onNo,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("NO")
+                }
+
+                Button(
+                    onClick = onYes,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("YES")
+                }
+
             }
 
         }

@@ -16,6 +16,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -42,7 +43,7 @@ fun PaymentMethodScreen(
                 title = {
                     Card(
                         colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFF7E8D6)
+                            containerColor = MaterialTheme.colorScheme.surface
                         )
                     ) {
                         Text(
@@ -61,7 +62,7 @@ fun PaymentMethodScreen(
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             )
         },
@@ -69,7 +70,7 @@ fun PaymentMethodScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFEAF3F7))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(padding)
                 .padding(20.dp)
         ) {
@@ -91,7 +92,7 @@ fun PaymentMethodScreen(
                 Text(
                     text = "đ",
                     fontSize = 28.sp,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
 
@@ -107,7 +108,7 @@ fun PaymentMethodScreen(
                     Icon(
                         Icons.Outlined.ShoppingCart,
                         null,
-                        tint = Color.LightGray
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                     )
                 }
             ) {}
@@ -139,7 +140,7 @@ fun PaymentMethodScreen(
                     Icon(
                         Icons.Outlined.Search,
                         null,
-                        tint = Color.LightGray
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
                     )
                 }
             ) {}

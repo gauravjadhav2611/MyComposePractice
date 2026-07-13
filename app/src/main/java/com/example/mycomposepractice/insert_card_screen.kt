@@ -14,6 +14,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -42,7 +43,7 @@ fun InsertCardScreen(
                 title = {
                     Card(
                         colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFFF7E8D6)
+                            containerColor = MaterialTheme.colorScheme.surface
                         )
                     ) {
                         Text(
@@ -61,7 +62,7 @@ fun InsertCardScreen(
                     }
                 },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             )
         },
@@ -69,7 +70,7 @@ fun InsertCardScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFEAF3F7))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(padding)
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -94,7 +95,7 @@ fun InsertCardScreen(
                     text = "đ",
                     fontSize = 28.sp,
                     modifier = Modifier.padding(bottom = 10.dp),
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
@@ -108,7 +109,7 @@ fun InsertCardScreen(
                     },
                 shape = RoundedCornerShape(24.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.surface
                 )
             ) {
 
@@ -134,7 +135,7 @@ fun InsertCardScreen(
                 text = "Please insert card below\nor TAP your card.",
                 textAlign = TextAlign.Center,
                 fontSize = 24.sp,
-                color = Color.DarkGray
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Spacer(modifier = Modifier.height(30.dp))

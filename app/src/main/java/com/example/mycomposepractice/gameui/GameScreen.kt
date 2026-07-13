@@ -118,12 +118,12 @@ fun GameItem(
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFF8F8F8),
+            containerColor = MaterialTheme.colorScheme.onBackground,
 //            contentColor = Color(0xFFF3F3F3),
         ),
         border = BorderStroke(
                 width = 1.dp,
-        color = Color(0xFFC2C2C2)
+        color = MaterialTheme.colorScheme.onBackground
     ),
     ) {
 
@@ -145,16 +145,20 @@ fun GameItem(
 
                 Text(
                     text = game.title,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.surface
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(game.genre)
+                Text(game.genre,
+                    color = MaterialTheme.colorScheme.surface)
 
-                Text(game.platform)
+                Text(game.platform,
+                    color = MaterialTheme.colorScheme.surface)
 
-                Text(game.publisher)
+                Text(game.publisher,
+                    color = MaterialTheme.colorScheme.surface)
 
             }
 

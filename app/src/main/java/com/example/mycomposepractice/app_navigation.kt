@@ -12,11 +12,13 @@ import androidx.navigation.compose.*
 import com.example.mycomposepractice.PreAuthScreen
 import com.example.mycomposepractice.gameui.GameScreen
 import com.example.mycomposepractice.screens.HomeScreen
+import com.example.mycomposepractice.screens.SettingsScreen
 import com.example.mycomposepractice.ui.PreAuthFlowScreen
+import com.example.mycomposepractice.viewmodel.ThemeViewModel
 import com.google.android.gms.location.LocationServices
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation(themeViewModel: ThemeViewModel){
 
     val navController = rememberNavController();
 
@@ -38,6 +40,10 @@ fun AppNavigation(){
 
         composable("preAuth") {
             PreAuthScreen(navController)
+        }
+
+        composable("settings") {
+            SettingsScreen(navController = navController, themeViewModel = themeViewModel)
         }
 
         composable(
